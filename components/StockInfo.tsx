@@ -45,9 +45,9 @@ export function StockInfo({ symbol, quote: initialQuote, summary: initialSummary
             <StatsCard label="Day High" value={quote.regularMarketDayHigh} prefix="₹" className="text-green-500" />
             <StatsCard label="Day Low" value={quote.regularMarketDayLow} prefix="₹" className="text-red-500" />
 
-            <StatsCard label="Volume" value={quote.regularMarketVolume} formatter={(val) => (val / 1000000).toFixed(2) + "M"} />
-            <StatsCard label="Market Cap" value={quote.marketCap} formatter={(val) => "₹" + (val / 10000000).toFixed(2) + "Cr"} />
-            <StatsCard label="P/E Ratio" value={quote.trailingPE} formatter={(val) => val?.toFixed(2)} />
+            <StatsCard label="Volume" value={quote.regularMarketVolume} formatter={(val: number) => (val / 1000000).toFixed(2) + "M"} />
+            <StatsCard label="Market Cap" value={quote.marketCap} formatter={(val: number) => "₹" + (val / 10000000).toFixed(2) + "Cr"} />
+            <StatsCard label="P/E Ratio" value={quote.trailingPE} formatter={(val: number) => val?.toFixed(2)} />
             <StatsCard label="52W High" value={quote.fiftyTwoWeekHigh} prefix="₹" />
         </div>
     );
