@@ -20,8 +20,10 @@ import { useState, useEffect } from "react";
 export function Navbar() {
     const pathname = usePathname();
     const [user, setUser] = useState<any>(null);
+    const [mounted, setMounted] = useState(false);
 
     useEffect(() => {
+        setMounted(true);
         const storedUser = localStorage.getItem("user");
         if (storedUser) {
             setUser(JSON.parse(storedUser));
@@ -33,6 +35,21 @@ export function Navbar() {
         setUser(null);
         window.location.href = "/";
     };
+
+    // Prevent hydration mismatch by not rendering user-dependent content until mounted
+    if (!mounted) {
+        return (
+            <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+                <div className="container flex h-16 items-center justify-between px-4 md:px-6">
+                    <div className="flex items-center gap-4">
+                        <Link href="/" className="flex items-center gap-2 text-xl font-bold tracking-tighter">
+                            <span className="text-primary">Stock</span>Sight
+                        </Link>
+                    </div>
+                </div>
+            </header>
+        );
+    }
 
     return (
         <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -54,9 +71,14 @@ export function Navbar() {
                                     Dashboard
                                 </Link>
                                 {user && (
-                                    <Link href="/alerts" className="text-muted-foreground hover:text-foreground">
-                                        Alerts
-                                    </Link>
+                                    <>
+                                        <Link href="/portfolio" className="text-muted-foreground hover:text-foreground">
+                                            Portfolio
+                                        </Link>
+                                        <Link href="/alerts" className="text-muted-foreground hover:text-foreground">
+                                            Alerts
+                                        </Link>
+                                    </>
                                 )}
                             </nav>
                         </SheetContent>
@@ -69,9 +91,14 @@ export function Navbar() {
                             Dashboard
                         </Link>
                         {user && (
-                            <Link href="/alerts" className={`transition-colors hover:text-foreground/80 ${pathname === "/alerts" ? "text-foreground" : "text-foreground/60"}`}>
-                                Alerts
-                            </Link>
+                            <>
+                                <Link href="/portfolio" className={`transition-colors hover:text-foreground/80 ${pathname === "/portfolio" ? "text-foreground" : "text-foreground/60"}`}>
+                                    Portfolio
+                                </Link>
+                                <Link href="/alerts" className={`transition-colors hover:text-foreground/80 ${pathname === "/alerts" ? "text-foreground" : "text-foreground/60"}`}>
+                                    Alerts
+                                </Link>
+                            </>
                         )}
                     </nav>
                 </div>
@@ -99,6 +126,9 @@ export function Navbar() {
                             <DropdownMenuContent align="end">
                                 <DropdownMenuLabel>My Account</DropdownMenuLabel>
                                 <DropdownMenuSeparator />
+                                <DropdownMenuItem>
+                                    <Link href="/portfolio" className="w-full">My Portfolio</Link>
+                                </DropdownMenuItem>
                                 <DropdownMenuItem>
                                     <Link href="/alerts" className="w-full">My Alerts</Link>
                                 </DropdownMenuItem>

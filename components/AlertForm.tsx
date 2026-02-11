@@ -87,6 +87,7 @@ export function AlertForm({ symbol, currentPrice }: AlertFormProps) {
                     <Button onClick={handleSetAlert} className="w-full font-bold bg-primary hover:bg-primary/90 shadow-[0_0_15px_-5px_var(--primary)] transition-all hover:scale-[1.02]">
                         <Bell className="mr-2 h-4 w-4" /> Create Alert
                     </Button>
+
                 </div>
             </CardContent>
         </Card>

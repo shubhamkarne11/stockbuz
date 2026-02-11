@@ -2,6 +2,7 @@ import { StockHeader } from "@/components/StockHeader";
 import { StockChart } from "@/components/StockChart";
 import { StockInfo } from "@/components/StockInfo";
 import { AlertForm } from "@/components/AlertForm";
+import { AddToPortfolioForm } from "@/components/AddToPortfolioForm";
 import yahooFinance from '@/lib/yahoo';
 import { Card, CardContent } from "@/components/ui/card";
 
@@ -79,17 +80,15 @@ export default async function StockPage(props: PageProps) {
                         </Card>
                     </div>
 
-                    {/* Right Column: Alerts & Actions (4 cols) */}
                     <div className="lg:col-span-4 space-y-6">
                         <AlertForm symbol={symbol} currentPrice={data.quote.regularMarketPrice || 0} />
 
-                        {/* Watchlist Placeholder */}
-                        <Card className="bg-black/40 backdrop-blur-md border-white/10">
-                            <CardContent className="pt-6">
-                                <h3 className="text-lg font-semibold mb-2">Watchlist</h3>
-                                <p className="text-sm text-muted-foreground">Log in to add this stock to your watchlist.</p>
-                            </CardContent>
-                        </Card>
+                        {/* Add to Portfolio */}
+                        <AddToPortfolioForm
+                            symbol={symbol}
+                            stockName={data.quote.shortName || symbol}
+                            currentPrice={data.quote.regularMarketPrice || 0}
+                        />
                     </div>
 
                 </div>
